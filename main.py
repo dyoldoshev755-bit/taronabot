@@ -23,7 +23,8 @@ ydl_opts = {
     'noplaylist': True,
     'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
     'quiet': True,
-    'nocheckcertificate': True
+    'nocheckcertificate': True,
+    'cookiefile': 'cookies.txt'
 }
 
 @bot.message_handler(func=lambda msg: any(domain in msg.text for domain in ['instagram.com', 'tiktok.com', 'youtu.be', 'youtube.com']))
@@ -67,4 +68,3 @@ def run_bot():
 if __name__ == "__main__":
     threading.Thread(target=run_flask).start()
     run_bot()
-    
