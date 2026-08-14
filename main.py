@@ -5,12 +5,6 @@ from flask import Flask
 import telebot
 import yt_dlp
 
-# --- AVTOMATIK COOKIES YARATISH ---
-cookie_content = "# Netscape HTTP Cookie File\n.instagram.com\tTRUE\t/\tTRUE\t0\tsessionid\tL9!Kh03xvOrIbHI\n"
-with open("cookies.txt", "w", encoding="utf-8") as f:
-    f.write(cookie_content)
-# ---------------------------------
-
 TOKEN = "8864516759:AAGFTzWxCyLHU_eQmlhx_G3FEBGttI7PLqQ"
 bot = telebot.TeleBot(TOKEN)
 
@@ -29,11 +23,10 @@ ydl_opts = {
     'noplaylist': True,
     'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
     'quiet': True,
-    'nocheckcertificate': True,
-    'cookiefile': 'cookies.txt'
+    'nocheckcertificate': True
 }
 
-@bot.message_handler(func=lambda msg: any(domain in msg.text for domain in ['instagram.com', 'tiktok.com', 'youtu.be', 'youtube.com']))
+@bot.message_handler(func=lambda msg: any(domain in msg.text for domain in ['tiktok.com', 'youtu.be', 'youtube.com']))
 def handle_social_media(message):
     status = bot.reply_to(message, "⚡️ Video yuklanmoqda...")
     url = message.text.strip().split()[0]
@@ -74,4 +67,4 @@ def run_bot():
 if __name__ == "__main__":
     threading.Thread(target=run_flask).start()
     run_bot()
-    
+                        
