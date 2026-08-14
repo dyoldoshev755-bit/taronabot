@@ -18,7 +18,7 @@ def home():
 def run_flask():
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
-# Video yuklash sozlamalari (YouTube / TikTok)
+# YouTube va TikTok video yuklash sozlamalari
 ydl_opts_video = {
     'format': 'best',
     'outtmpl': 'video.mp4',
@@ -40,7 +40,7 @@ ydl_opts_audio = {
     'nocheckcertificate': True
 }
 
-# 1. Video havolalari kelganda
+# 1. Video havolalari kelganda (YouTube yoki TikTok)
 @bot.message_handler(func=lambda msg: msg.text and any(d in msg.text for d in ['tiktok.com', 'youtu.be', 'youtube.com']))
 def download_video(message):
     sent_msg = bot.reply_to(message, "⚡️ Video yuklanmoqda, kuting...")
@@ -59,7 +59,7 @@ def download_video(message):
     except Exception as e:
         bot.edit_message_text(f"❌ Xatolik: {e}", message.chat.id, sent_msg.message_id)
 
-# 2. Artist yoki musiqa nomi yozilganda (10 ta natija chiqarish)
+# 2. Artist yoki musiqa nomi yozilganda (10 ta musiqa chiqarish)
 @bot.message_handler(func=lambda msg: msg.text and not any(d in msg.text for d in ['tiktok.com', 'youtu.be', 'youtube.com']))
 def search_music(message):
     query = message.text.strip()
