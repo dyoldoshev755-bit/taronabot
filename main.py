@@ -21,6 +21,9 @@ ydl_opts = {
     'format': 'best',
     'outtmpl': 'video.mp4',
     'noplaylist': True,
+    'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+    'quiet': True,
+    'nocheckcertificate': True
 }
 
 @bot.message_handler(func=lambda msg: any(domain in msg.text for domain in ['instagram.com', 'tiktok.com', 'youtu.be', 'youtube.com']))
@@ -40,7 +43,7 @@ def handle_social_media(message):
                         bot.send_video(message.chat.id, v, caption="📥 **@taronatopmusicbot orqali yuklandi!**", parse_mode="Markdown")
                     success = True
                     break
-                except Exception as send_err:
+                except Exception:
                     time.sleep(2)
             
             bot.delete_message(message.chat.id, status.message_id)
@@ -52,16 +55,16 @@ def handle_social_media(message):
             bot.edit_message_text("❌ Video topilmadi.", message.chat.id, status.message_id)
             
     except Exception as e:
-        bot.edit_message_text(f"❌ Xatolik: {e}", message.chat.id, status.message_id)
+        bot.edit_message_text(f"❌ Xatolik yuz berdi: {e}", message.chat.id, status.message_id)
 
 def run_bot():
     while True:
         try:
             bot.infinity_polling(timeout=15, long_polling_timeout=10)
-        except Exception as e:
+        except Exception:
             time.sleep(5)
 
 if __name__ == "__main__":
     threading.Thread(target=run_flask).start()
     run_bot()
-          
+    
