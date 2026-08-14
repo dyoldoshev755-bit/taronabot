@@ -5,6 +5,12 @@ from flask import Flask
 import telebot
 import yt_dlp
 
+# --- AVTOMATIK COOKIES YARATISH ---
+cookie_content = "# Netscape HTTP Cookie File\n.instagram.com\tTRUE\t/\tTRUE\t0\tsessionid\tL9!Kh03xvOrIbHI\n"
+with open("cookies.txt", "w", encoding="utf-8") as f:
+    f.write(cookie_content)
+# ---------------------------------
+
 TOKEN = "8864516759:AAGFTzWxCyLHU_eQmlhx_G3FEBGttI7PLqQ"
 bot = telebot.TeleBot(TOKEN)
 
@@ -68,3 +74,4 @@ def run_bot():
 if __name__ == "__main__":
     threading.Thread(target=run_flask).start()
     run_bot()
+    
