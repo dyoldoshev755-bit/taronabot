@@ -59,7 +59,7 @@ def download_video(message):
     except Exception as e:
         bot.edit_message_text(f"❌ Xatolik: {e}", message.chat.id, sent_msg.message_id)
 
-# 2. Artist yoki musiqa nomi yozilganda (YouTube'dan 10 ta musiqa chiqarish)
+# 2. Artist yoki musiqa nomi yozilganda (YouTube Music orqali 10 ta musiqa chiqarish)
 @bot.message_handler(func=lambda msg: msg.text and not any(d in msg.text for d in ['tiktok.com', 'youtu.be', 'youtube.com']))
 def search_music(message):
     query = message.text.strip()
@@ -67,11 +67,10 @@ def search_music(message):
     
     try:
         search_opts = {
-            'default_search': 'ytsearch10',
+            'default_search': 'ytmsearch10',
             'format': 'bestaudio',
             'quiet': True,
             'nocheckcertificate': True,
-            'extractor_args': {'youtube': {'player_client': ['android', 'web']}}
         }
         with yt_dlp.YoutubeDL(search_opts) as ydl:
             info = ydl.extract_info(query, download=False)
@@ -132,4 +131,3 @@ def run_bot():
 if __name__ == "__main__":
     threading.Thread(target=run_flask).start()
     run_bot()
-            
