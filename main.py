@@ -18,14 +18,14 @@ def home():
 def run_flask():
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
-# YouTube va TikTok video yuklash sozlamalari (iOS client orqali)
+# YouTube va TikTok video yuklash
 ydl_opts_video = {
     'format': 'best',
     'outtmpl': 'video.mp4',
     'noplaylist': True,
     'quiet': True,
     'nocheckcertificate': True,
-    'extractor_args': {'youtube': {'player_client': ['ios', 'web']}}
+    'extractor_args': {'youtube': {'player_client': ['android', 'web']}}
 }
 
 # Musiqa yuklash sozlamalari (MP3)
@@ -39,10 +39,10 @@ ydl_opts_audio = {
     }],
     'quiet': True,
     'nocheckcertificate': True,
-    'extractor_args': {'youtube': {'player_client': ['ios', 'web']}}
+    'extractor_args': {'youtube': {'player_client': ['android', 'web']}}
 }
 
-# 1. Video havolalari kelganda (YouTube yoki TikTok)
+# 1. Video havolalari kelganda
 @bot.message_handler(func=lambda msg: msg.text and any(d in msg.text for d in ['tiktok.com', 'youtu.be', 'youtube.com']))
 def download_video(message):
     sent_msg = bot.reply_to(message, "⚡️ Video yuklanmoqda, kuting...")
@@ -72,7 +72,7 @@ def search_music(message):
             'format': 'bestaudio',
             'quiet': True,
             'nocheckcertificate': True,
-            'extractor_args': {'youtube': {'player_client': ['ios', 'web']}}
+            'extractor_args': {'youtube': {'player_client': ['android', 'web']}}
         }
         with yt_dlp.YoutubeDL(search_opts) as ydl:
             info = ydl.extract_info(f"ytsearch10:{query}", download=False)
@@ -133,5 +133,4 @@ def run_bot():
 if __name__ == "__main__":
     threading.Thread(target=run_flask).start()
     run_bot()
-                               
-        
+    
