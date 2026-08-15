@@ -55,11 +55,11 @@ def download_video(message):
             bot.delete_message(message.chat.id, sent_msg.message_id)
             os.remove('video.mp4')
         else:
-            bot.edit_message_text("❌ Video topilmadi yoki yuklab bo'lmadi.", message.chat.id, sent_msg.message_id)
+            bot.edit_message_text("❌ Video topilmadi.", message.chat.id, sent_msg.message_id)
     except Exception as e:
         bot.edit_message_text(f"❌ Xatolik: {e}", message.chat.id, sent_msg.message_id)
 
-# 2. Artist yoki musiqa nomi yozilganda (10 ta musiqa chiqarish)
+# 2. Artist yoki musiqa nomi yozilganda (YouTube'dan 10 ta musiqa chiqarish)
 @bot.message_handler(func=lambda msg: msg.text and not any(d in msg.text for d in ['tiktok.com', 'youtu.be', 'youtube.com']))
 def search_music(message):
     query = message.text.strip()
@@ -70,7 +70,8 @@ def search_music(message):
             'default_search': 'ytsearch10',
             'format': 'bestaudio',
             'quiet': True,
-            'nocheckcertificate': True
+            'nocheckcertificate': True,
+            'extractor_args': {'youtube': {'player_client': ['android', 'web']}}
         }
         with yt_dlp.YoutubeDL(search_opts) as ydl:
             info = ydl.extract_info(query, download=False)
@@ -92,7 +93,7 @@ def search_music(message):
     except Exception as e:
         bot.edit_message_text(f"❌ Qidirishda xatolik: {e}", message.chat.id, sent_msg.message_id)
 
-# 3. Tugmani bosganda musiqani yuborish
+# 3. Tugmani bosganda musiqani MP3 qilib yuborish
 @bot.callback_query_handler(func=lambda call: call.data.startswith('mus_'))
 def send_audio(call):
     video_id = call.data.split('_')[1]
@@ -131,4 +132,4 @@ def run_bot():
 if __name__ == "__main__":
     threading.Thread(target=run_flask).start()
     run_bot()
-    
+            
